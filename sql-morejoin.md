@@ -76,3 +76,41 @@ HAVING COUNT(title) > 2
 ## 12
 
 
+SELECT title, name
+FROM movie
+JOIN casting ON (casting.movieid = movie.id)
+JOIN actor ON (casting.actorid = actor.id)
+WHERE casting.ord = 1 AND movieid IN
+   (SELECT movieid FROM casting, actor
+     WHERE actorid=actor.id
+     AND name='Julie Andrews')
+
+
+## 13
+
+SELECT name
+FROM actor
+JOIN casting ON (casting.actorid=actor.id)
+WHERE casting.ord=1 
+GROUP BY name
+HAVING COUNT(casting.actorid)>=30
+
+
+## 14
+
+SELECT title, COUNT(actorid)
+FROM movie
+JOIN casting ON (movie.id=casting.movieid)
+WHERE yr=1978 
+GROUP BY title
+ORDER BY COUNT(actorid) DESC, title
+
+
+## 14
+
+SELECT name
+FROM actor
+JOIN casting ON (id=casting.actorid and name!='Art Garfunkel')
+WHERE casting.movieid IN (SELECT movieid FROM casting
+      WHERE actorid = (SELECT id FROM actor WHERE name='Art Garfunkel'))    
+
