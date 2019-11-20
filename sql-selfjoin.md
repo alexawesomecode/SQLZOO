@@ -35,3 +35,51 @@ WHERE a.stop=53  AND b.stop=149
 
 
 
+SELECT a.company, a.num, stopa.name, stopb.name
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart' AND stopb.name = 'London Road'
+
+
+## 7 
+
+SELECT DISTINCT a.company, a.num
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Haymarket' AND stopb.name = 'Leith'
+
+## 8 
+
+SELECT DISTINCT a.company, a.num
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name='Craiglockhart' AND stopb.name = 'Tollcross'
+
+## 9
+
+SELECT DISTINCT stopb.name, a.company, a.num
+FROM route a JOIN route b ON
+  (a.company=b.company AND a.num=b.num)
+  JOIN stops stopa ON (a.stop=stopa.id)
+  JOIN stops stopb ON (b.stop=stopb.id)
+WHERE stopa.name = 'Craiglockhart'
+
+## 10
+
+SELECT DISTINCT a.num, a.company, stopb.name ,  x.num,  x.company
+FROM route a JOIN route b
+ON (a.company = b.company AND a.num = b.num)
+JOIN ( route x JOIN route z ON (x.company = z.company AND x.num= z.num))
+JOIN stops stopa ON (a.stop = stopa.id)
+JOIN stops stopb ON (b.stop = stopb.id)
+JOIN stops stopx ON (x.stop = stopx.id)
+JOIN stops stopz ON (z.stop = stopz.id)
+JOIN stops ON(stops.id = x.stop)
+WHERE  stopa.name = 'Craiglockhart' AND stopz.name = 'Lochend' AND  stopb.name = stopx.name
+
